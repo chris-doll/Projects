@@ -1,0 +1,19 @@
+#!/bin/bash
+#Author: Chris Doll
+
+#Move this script to ~/.local/bin, add this directory to PATH!
+
+timestamp= $(date + "%Y%m%d_%H%M%S")
+
+if [[ -z "$1" ]]; then
+    echo "Add the log directory as an argument"
+    echo "Syntax: log-archive <path>"
+    exit 1
+else
+    echo "You chose $1 ... zipping up now"
+    echo "$(tar -czvf $1)"
+    
+    exit 0
+fi
+
+

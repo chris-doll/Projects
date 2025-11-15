@@ -18,9 +18,16 @@ mem_usp=$(echo "scale=3;$mem_used / $mem_total * 100" | bc -l)
 echo "Your RAM used is $mem_usp %"
 echo "Your RAM free is $mem_fp %"
 
-
-
-
+#get Disk usage stats from running df -h and save them
+disk_size=$(df -h | grep "/dev/sda" | tr -s ' ' | awk '{print $2}' | sed 's/G//')
+disk_used=$(df -h | grep "/dev/sda" | tr -s ' ' | awk '{print $3}' | sed 's/G//')
+disk_avail=$(df -h | grep "/dev/sda" | tr -s ' ' | awk '{print $4}' | sed 's/G//')
+#calculate percentages of used/free vs total
+disk_usep=$(echo "scale=3;$disk_used / $disk_size * 100" | bc -l)
+disk_frep=$(echo "scale=3;$disk_avail / $disk_size * 100" | bc -l)
+#print disk usage percentages
+echo "Your disk usage is $disk_usep %" 
+echo "Your disk free is $disk_frep %"
 
 
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+#Author: Chris Doll
 
 #extract and save the idle cpu value from top output
 cpu_idle=$(top -bn1 | grep "Cpu(s)" | tr -s ' ' | awk '{print $8}' | sed 's/id,//')
@@ -36,6 +37,7 @@ tfive_cpu=$(ps aux --sort=-%cpu | head -n 6)
 echo "Top 5 processes by CPU%"
 echo "$tfive_cpu"
 echo " "
+
 #get top 5 processes by MEM/RAM usage
 tfive_mem=$(ps aux --sort=-%mem | head -n 6)
 echo "Top 5 processes by MEM%"
@@ -43,6 +45,7 @@ echo "$tfive_mem"
 echo " "
 echo "Other Stats: "
 echo " "
+
 #OS Version
 echo "OS Information: $(lsb_release -a)"
 echo "Uptime: $(uptime -p)"

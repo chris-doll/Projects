@@ -40,16 +40,14 @@ echo " "
 tfive_mem=$(ps aux --sort=-%mem | head -n 6)
 echo "Top 5 processes by MEM%"
 echo "$tfive_mem"
-
-
-
-
-
-
-
-
-
-
-
+echo " "
+echo "Other Stats: "
+echo " "
+#OS Version
+echo "OS Information: $(lsb_release -a)"
+echo "Uptime: $(uptime -p)"
+echo "Load Average: $(top -bn1 | grep "load average:" | tr -s ' ' | awk '{for(i=8;i<=12;i++) printf "%s ", $i; print ""}' )"
+echo "Logged In Users: $(top -bn1 | grep "load average:" | tr -s ' ' | awk '{for(i=6;i<=7;i++) printf "%s ", $i; print ""}' )"
+echo "Failed Login Attempts: $(if ! grep -q "Failed password" /var/log/auth.log; then echo "None found"; fi)"
 
 

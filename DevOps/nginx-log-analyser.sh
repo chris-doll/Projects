@@ -9,15 +9,17 @@ if [[ ! -f "$file" ]]; then
     echo "File does not exist: $file"
     exit 1
 else    
-#    echo "$(awk '{print}' $file)"
     echo "Top 5 IP addresses with the most requests"
     echo "$(awk '{print $1}' $file | uniq -c | sort -nr | head -n 6 | awk '{print $2, "-", $1, "requests"}')"
     echo
     echo "Top 5 most requested paths:"
-    echo "$(awk '{print $7}' $file | uniq -c | sort -nr | head -n 50)"
-    
-    
-    
+    echo "$(awk '{print $7}' $file | sort | uniq -c | sort -nr | head -n 6 | awk '{print $2, "-", $1, "requests"}')"
+    echo
+    echo "Top 5 response status codes:"
+    echo "$(awk '{print $9}' $file | sort | uniq -c | sort -nr | head -n 6 | awk '{print $2, "-", $1, "requests"}')"
+    echo
+    echo "Top 5 user agents:"
+    echo "$(awk '{print $12}' $file | sort | uniq -c | sort -nr | head -n 6 | awk '{print $2, "-", $1, "requests"}')"  
     exit 0
 fi
 

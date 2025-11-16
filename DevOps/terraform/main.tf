@@ -112,9 +112,40 @@ resource "aws_instance" "my_ec2" {
 #  subnet_id = aws_subnet.private.id 
   key_name = "my-key-pair"   # <-- must exist in AWS EC2 prior to running this (EC2 > Key Pairs)
   vpc_security_group_ids = [aws_security_group.ssh.id]
+  user_data = <<-EOF
+    #!/bin/bash
+
+    # Update system
+    yum update -y
+
+    # Install fail2ban
+    yum install -y fail2ban
+
+    # Enable fail2ban at boot
+    systemctl enable fail2ban
+
+    # Basic Fail2ban configuration
+    cat << 'CONFIG' > /etc/fail2ban/jail.local
+    [DEFAULT]
+    bantime  = 10m
+    findtime = 10m
+    maxretry = 5
+    destemail = root@localhost
+    action = %(action_)s
+
+    [sshd]
+    enabled = true
+    port    = ssh
+    logpath = /var/log/secure
+    backend = systemd
+    CONFIG
+
+    # Start fail2ban
+    systemctl restart fail2ban
+  EOF
 
   tags = {
-    Name = "MyTerraformEC2"
+    Name = "Fail2ban-EC2"
   }
 }
 

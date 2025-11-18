@@ -1,26 +1,11 @@
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
+import re
 
-def findLowestValue(head):
-    minValue = head.data        #start by assuming first node is smallest value 
-    currentNode = head.next     #used to walk through list, set pointer to next node since we used first node already...
-    while currentNode:          #continue to loop until currentNode = NULL
-        if currentNode.data < minValue:     # if current node is smaller than the current value of minValue
-            minValue = currentNode.data     # set minValue to the current node data
-        currentNode = currentNode.next  # progress to next Node in list
-    return minValue                     # return minValue after function ends
+#create a string with ones in it
+my_string = "1, 2, 3, 2, 1, asdf, reqw, 1, 1, abc, xyz"
+#replace the 1s with the word "one"
+regEx1 = re.sub(r'1', 'one', my_string)
+#print results
+print(regEx1)
 
-node1 = Node(7)
-node2 = Node(11)
-node3 = Node(3)
-node4 = Node(2)
-node5 = Node(9)
-
-node1.next = node2
-node2.next = node3
-node3.next = node4
-node4.next = node5
-
-print("The lowest value in the linked list is:", findLowestValue(node1))
+add2 = lambda x: x + 2
+print (add2(12))
